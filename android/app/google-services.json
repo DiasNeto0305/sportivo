@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "277591850952",
+    "firebase_url": "https://sportivo-c9005-default-rtdb.firebaseio.com",
+    "project_id": "sportivo-c9005",
+    "storage_bucket": "sportivo-c9005.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:277591850952:android:e83017fe285c63ccfd4afd",
+        "android_client_info": {
+          "package_name": "com.example.sportivo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "277591850952-cjmbmmv05cpustui9v48emmirg05kk8g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVZSDKSasWhgM-y-zARR9l6hM86xY8S1I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "277591850952-cjmbmmv05cpustui9v48emmirg05kk8g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
