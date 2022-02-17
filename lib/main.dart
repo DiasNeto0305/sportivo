@@ -2,7 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:sportivo/models/place_list.dart';
+import 'package:sportivo/controllers/place_controller.dart';
 import 'package:sportivo/pages/default_page.dart';
 import 'package:sportivo/pages/loading_page.dart';
 import 'package:sportivo/pages/places_form.dart';
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       return MultiProvider(
         providers: [
           ChangeNotifierProvider(
-            create: (_) => PlaceList(),
+            create: (_) => PlaceController(),
           )
         ],
         child: MaterialApp(

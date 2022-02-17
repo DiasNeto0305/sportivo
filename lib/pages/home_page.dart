@@ -5,7 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:sportivo/components/carousel.dart';
 import 'package:sportivo/components/dropdown_location.dart';
 import 'package:sportivo/components/cards/favorite_cards.dart';
-import 'package:sportivo/models/place_list.dart';
+import 'package:sportivo/controllers/place_controller.dart';
+import 'package:sportivo/repositories/place_list.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
     final height = MediaQuery.of(context).viewPadding.top;
     final sugestoes = 'Sugestões';
     final proximos = 'Mais Próximos';
-    final provider = Provider.of<PlaceList>(context);
+    final provider = Provider.of<PlaceController>(context);
     return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

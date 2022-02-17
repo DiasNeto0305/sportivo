@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sportivo/components/search/search_button.dart';
-import 'package:sportivo/models/place_list.dart';
+import 'package:sportivo/controllers/place_controller.dart';
 import 'package:sportivo/pages/places_page.dart';
 
 class SearchPage extends StatelessWidget {
@@ -11,7 +11,7 @@ class SearchPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).viewPadding.top;
-    final provider = Provider.of<PlaceList>(context);
+    final provider = Provider.of<PlaceController>(context);
     return Padding(
       padding: EdgeInsets.only(top: 16.h + height.h),
       child: Column(

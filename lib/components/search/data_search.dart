@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sportivo/models/place_list.dart';
+import 'package:sportivo/controllers/place_controller.dart';
 import 'package:sportivo/pages/places_page.dart';
 
 class DataSearch extends SearchDelegate<String> {
@@ -30,7 +30,7 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildResults(BuildContext context) {
-    final provider = Provider.of<PlaceList>(context);
+    final provider = Provider.of<PlaceController>(context);
     var placesData = provider.places.where((element) {
       var placesTitle = element.name as String;
       return placesTitle.toLowerCase().startsWith(query.toLowerCase());
@@ -40,7 +40,7 @@ class DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    final provider = Provider.of<PlaceList>(context);
+    final provider = Provider.of<PlaceController>(context);
     var placesData = provider.places.where((element) {
       var placesTitle = element.name as String;
       return placesTitle.toLowerCase().startsWith(query.toLowerCase());
@@ -55,7 +55,7 @@ class DataSearch extends SearchDelegate<String> {
         },
         leading: Icon(
           Icons.place,
-          color: provider.categoryItem(suggestionList[index].id)['color'],
+          color: provider.categoryItem(suggestionList[index])['color'],
         ),
         title: RichText(
           text: TextSpan(

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sportivo/components/schedule_text.dart';
-import 'package:sportivo/models/place_list.dart';
+import 'package:sportivo/controllers/place_controller.dart';
+import 'package:sportivo/repositories/place_list.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
@@ -18,8 +19,8 @@ class PlaceDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).viewPadding.top;
-    final provider = Provider.of<PlaceList>(context);
-    final category = provider.categoryItem(placeItem.id);
+    final provider = Provider.of<PlaceController>(context);
+    final category = provider.categoryItem(placeItem);
     return Scaffold(
       body: CustomScrollView(
         slivers: [

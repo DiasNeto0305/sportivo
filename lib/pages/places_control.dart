@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sportivo/models/place_list.dart';
+import 'package:sportivo/controllers/place_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PlacesControl extends StatefulWidget {
@@ -13,7 +13,7 @@ class PlacesControl extends StatefulWidget {
 class _PlacesControlState extends State<PlacesControl> {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<PlaceList>(context);
+    final provider = Provider.of<PlaceController>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Gerenciar Locais'),

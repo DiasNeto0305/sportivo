@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:sportivo/models/place_list.dart';
+import 'package:sportivo/controllers/place_controller.dart';
 import 'package:sportivo/pages/place_detail_page.dart';
 
 class PlacesPage extends StatelessWidget {
@@ -15,7 +15,7 @@ class PlacesPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<PlaceList>(context);
+    final provider = Provider.of<PlaceController>(context);
     return Scaffold(
       appBar: (appBar == true)
           ? AppBar(
@@ -57,7 +57,7 @@ class PlacesPage extends StatelessWidget {
                         TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp),
                   ),
                   subtitle: Text(
-                    '${provider.categoryItem(placesData[index].id)['name']} - 4,0 km - 5 amigos',
+                    '${provider.categoryItem(placesData[index])['name']} - 4,0 km - 5 amigos',
                     style:
                         TextStyle(fontSize: 12.sp, fontWeight: FontWeight.w500),
                   ),

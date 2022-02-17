@@ -6,8 +6,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:path/path.dart' as path;
+import 'package:sportivo/controllers/place_controller.dart';
 import 'package:sportivo/models/place.dart';
-import 'package:sportivo/models/place_list.dart';
+import 'package:sportivo/repositories/place_list.dart';
 
 class PlacesForm extends StatefulWidget {
   const PlacesForm({Key? key}) : super(key: key);
@@ -19,6 +20,7 @@ class PlacesForm extends StatefulWidget {
 class _PlacesFormState extends State<PlacesForm> {
   final _formKey = GlobalKey<FormState>();
   final _formData = Map<String, Object>();
+  String _flagListType = 'string';
   File? _storedImage;
   bool _isAddPage = true;
 
@@ -56,18 +58,19 @@ class _PlacesFormState extends State<PlacesForm> {
         final savedImage = await _storedImage!.copy('${appDir.path}/$fileName');
         (_formData['urlImage'] as List).add(savedImage);
       }
+      _flagListType = 'File';
     }
   }
 
   void _submitForm() {
     _formKey.currentState?.save();
-    Provider.of<PlaceList>(context, listen: false).savePlace(_formData);
+    Provider.of<PlaceController>(context, listen: false).savePlace(_formData, _flagListType);
     Navigator.pop(context, true);
   }
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<PlaceList>(context);
+    final provider = Provider.of<PlaceController>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(_isAddPage ? 'Adicionar Local' : 'Editar Local'),

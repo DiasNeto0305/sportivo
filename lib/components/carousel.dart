@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sportivo/components/cards/big_cards.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:sportivo/models/place_list.dart';
+import 'package:sportivo/controllers/place_controller.dart';
 
 class Carousel extends StatefulWidget {
   final String carouselName;
@@ -18,7 +18,7 @@ class _CarouselState extends State<Carousel> {
   
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<PlaceList>(context);
+    final provider = Provider.of<PlaceController>(context);
     final carouselData =
         widget.carouselName == 'Sugestões' ? provider.suggestions : provider.favorites;
     return Container(

@@ -1,8 +1,8 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sportivo/components/bottom_navigation.dart';
-import 'package:sportivo/models/place_list.dart';
+import 'package:sportivo/controllers/place_controller.dart';
+import 'package:sportivo/repositories/place_list.dart';
 import 'package:sportivo/pages/events_page.dart';
 import 'package:sportivo/pages/home_page.dart';
 import 'package:sportivo/pages/profile_page.dart';
@@ -28,7 +28,7 @@ class _DefaultPageState extends State<DefaultPage> {
   @override
   void initState() {
     super.initState();
-    Provider.of<PlaceList>(context, listen: false).loadPlaces();
+    Provider.of<PlaceController>(context, listen: false).loadPlaces();
   }
 
   final List<Widget> _pages = [
