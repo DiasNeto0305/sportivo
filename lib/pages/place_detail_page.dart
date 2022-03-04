@@ -4,9 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sportivo/components/schedule_text.dart';
 import 'package:sportivo/controllers/place_controller.dart';
-import 'package:sportivo/repositories/place_list.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 
 class PlaceDetailPage extends StatelessWidget {
   final placeItem;
@@ -42,13 +40,15 @@ class PlaceDetailPage extends StatelessWidget {
                 children: [
                   CarouselSlider(
                     items: [
-                      for (var index = 0; index < placeItem.urlImage.length; index++)
+                      for (var index = 0;
+                          index < placeItem.urlImage.length;
+                          index++)
                         Center(
                             child: Image.network(
-                          placeItem.urlImage[index],
-                          fit: BoxFit.cover,
-                          height: (375 + height).h,
-                        ))
+                              placeItem.urlImage[index],
+                              fit: BoxFit.cover,
+                              height: (375 + height).h,
+                            ))
                     ],
                     options: CarouselOptions(
                         height: (375 + height).h,
@@ -131,7 +131,10 @@ class PlaceDetailPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: ListTile(
-                  leading: FaIcon(FontAwesomeIcons.mapMarkerAlt, color: category['color'],),
+                  leading: FaIcon(
+                    FontAwesomeIcons.mapMarkerAlt,
+                    color: category['color'],
+                  ),
                   title: Text(
                     placeItem.address,
                     style:

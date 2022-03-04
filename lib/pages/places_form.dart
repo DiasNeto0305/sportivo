@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 import 'package:path/path.dart' as path;
 import 'package:sportivo/controllers/place_controller.dart';
 import 'package:sportivo/models/place.dart';
-import 'package:sportivo/repositories/place_list.dart';
 
 class PlacesForm extends StatefulWidget {
   const PlacesForm({Key? key}) : super(key: key);
@@ -23,6 +22,7 @@ class _PlacesFormState extends State<PlacesForm> {
   String _flagListType = 'string';
   File? _storedImage;
   bool _isAddPage = true;
+  bool _loading = false;
 
   @override
   void didChangeDependencies() {
@@ -63,9 +63,18 @@ class _PlacesFormState extends State<PlacesForm> {
   }
 
   void _submitForm() {
+    setState(() {
+      _loading = true;
+    });
     _formKey.currentState?.save();
-    Provider.of<PlaceController>(context, listen: false).savePlace(_formData, _flagListType);
-    Navigator.pop(context, true);
+    Provider.of<PlaceController>(context, listen: false)
+        .savePlace(_formData, _flagListType)
+        .then((value) {
+      setState(() {
+        _loading = false;
+      });
+      Navigator.pop(context, true);
+    });
   }
 
   @override
@@ -149,7 +158,9 @@ class _PlacesFormState extends State<PlacesForm> {
                     width: double.infinity,
                     child: OutlinedButton.icon(
                       icon: FaIcon(FontAwesomeIcons.images),
-                      label: Text(_isAddPage ? 'Selecionar Imagens' : 'Alterar Imagens'),
+                      label: Text(_isAddPage
+                          ? 'Selecionar Imagens'
+                          : 'Alterar Imagens'),
                       onPressed: _pickImages,
                     ),
                   ),
@@ -159,9 +170,19 @@ class _PlacesFormState extends State<PlacesForm> {
                   child: Container(
                     width: double.infinity,
                     child: ElevatedButton.icon(
-                      icon: FaIcon(FontAwesomeIcons.paperPlane),
+                      icon: _loading
+                          ? Container(
+                              width: 24,
+                              height: 24,
+                              padding: const EdgeInsets.all(2.0),
+                              child: const CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2.0,
+                              ),
+                            )
+                          : FaIcon(FontAwesomeIcons.paperPlane),
                       label: Text('Salvar'),
-                      onPressed: _submitForm,
+                      onPressed: _loading ? null : _submitForm,
                     ),
                   ),
                 ),

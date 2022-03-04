@@ -11,6 +11,9 @@ class PlacesControl extends StatefulWidget {
 }
 
 class _PlacesControlState extends State<PlacesControl> {
+  bool _loading = false;
+  int _onPressedItem = 0;
+
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<PlaceController>(context);
@@ -53,10 +56,26 @@ class _PlacesControlState extends State<PlacesControl> {
                     color: Theme.of(context).primaryColor,
                   ),
                   IconButton(
-                    onPressed: () {
-                      provider.removePlace(provider.places[index]);
+                    onPressed: () async {
+                      setState(() {
+                        _loading = true;
+                        _onPressedItem = index;
+                      });
+                      await provider.removePlace(provider.places[index]);
+                      setState(() {
+                        _loading = false;
+                      });
                     },
-                    icon: Icon(Icons.delete),
+                    icon: _loading && (_onPressedItem == index)
+                        ? Container(
+                            width: 24,
+                            height: 24,
+                            padding: const EdgeInsets.all(2.0),
+                            child: const CircularProgressIndicator(
+                              strokeWidth: 2.0,
+                            ),
+                          )
+                        : Icon(Icons.delete),
                     color: Theme.of(context).errorColor,
                   )
                 ],

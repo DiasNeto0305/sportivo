@@ -19,10 +19,10 @@ class ProfilePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 CircleAvatar(
-                  backgroundColor: Colors.indigo[600],
+                  backgroundColor: Colors.indigo,
                   radius: 42.r,
                   child: CircleAvatar(
-                    backgroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                     child: CircleAvatar(
                       backgroundImage:
                           AssetImage('assets/img/profileImage.jpeg'),
@@ -70,12 +70,10 @@ class ProfilePage extends StatelessWidget {
                   leading: FaIcon(
                     FontAwesomeIcons.bullseye,
                     size: 24,
-                    color: Color.fromRGBO(26, 35, 126, 0.9),
                   ),
                   trailing: FaIcon(
                     FontAwesomeIcons.chevronRight,
                     size: 16,
-                    color: Color.fromRGBO(26, 35, 126, 0.9),
                   ),
                   title: Text(
                     'Objetivos',
@@ -87,12 +85,10 @@ class ProfilePage extends StatelessWidget {
                   leading: FaIcon(
                     FontAwesomeIcons.gamepad,
                     size: 24,
-                    color: Color.fromRGBO(26, 35, 126, 0.9),
                   ),
                   trailing: FaIcon(
                     FontAwesomeIcons.chevronRight,
                     size: 16,
-                    color: Color.fromRGBO(26, 35, 126, 09),
                   ),
                   title: Text(
                     'Fantasy',
@@ -104,12 +100,10 @@ class ProfilePage extends StatelessWidget {
                   leading: FaIcon(
                     FontAwesomeIcons.wallet,
                     size: 24,
-                    color: Color.fromRGBO(26, 35, 126, 0.9),
                   ),
                   trailing: FaIcon(
                     FontAwesomeIcons.chevronRight,
                     size: 16,
-                    color: Color.fromRGBO(26, 35, 126, 0.9),
                   ),
                   title: Text(
                     'Controle de Gastos',
@@ -121,34 +115,32 @@ class ProfilePage extends StatelessWidget {
                   leading: FaIcon(
                     FontAwesomeIcons.cog,
                     size: 24,
-                    color: Color.fromRGBO(26, 35, 126, 0.9),
                   ),
                   trailing: FaIcon(
                     FontAwesomeIcons.chevronRight,
                     size: 16,
-                    color: Color.fromRGBO(26, 35, 126, 0.9),
                   ),
                   title: Text(
-                    'Configurações',
+                    'Tema',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
+                  onTap: () {
+                    Navigator.of(context).pushNamed('/theme');
+                  },
                 ),
                 ListTile(
                   onTap: () {
                     Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => PlacesControl())
-                    );
+                        MaterialPageRoute(builder: (_) => PlacesControl()));
                   },
                   contentPadding: EdgeInsets.symmetric(vertical: 8),
                   leading: FaIcon(
                     FontAwesomeIcons.lock,
                     size: 24,
-                    color: Color.fromRGBO(26, 35, 126, 0.9),
                   ),
                   trailing: FaIcon(
                     FontAwesomeIcons.chevronRight,
                     size: 16,
-                    color: Color.fromRGBO(26, 35, 126, 0.9),
                   ),
                   title: Text(
                     'Admin',

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
-import 'package:sportivo/controllers/place_controller.dart';
 import 'package:sportivo/pages/place_detail_page.dart';
 
 class BigCards extends StatelessWidget {
@@ -13,7 +11,6 @@ class BigCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<PlaceController>(context);
     return ClipRRect(
       borderRadius: BorderRadius.circular(8.r),
       child: GridTile(
@@ -32,21 +29,6 @@ class BigCards extends StatelessWidget {
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black54,
-          leading: Text(
-            '12km',
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w500,
-                fontSize: 12.sp),
-          ),
-          trailing: IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.sports,
-              size: 20,
-            ),
-            color: provider.categoryItem(placeItem)['color'],
-          ),
           title: Text(
             placeItem.name,
             textAlign: TextAlign.center,

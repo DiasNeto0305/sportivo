@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sportivo/models/place.dart';
 
 final List<String> locationPlaces = [
   'Rua Terezinha de Medeiros Dantas Souza',

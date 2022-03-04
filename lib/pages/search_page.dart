@@ -44,7 +44,7 @@ class SearchPage extends StatelessWidget {
                     },
                     child: Card(
                       elevation: 0,
-                      color: Color(0xfffafafa),
+                      color: Colors.transparent,
                       child: Image.asset(
                         provider.categories[index]['urlImage'],
                         fit: BoxFit.cover,

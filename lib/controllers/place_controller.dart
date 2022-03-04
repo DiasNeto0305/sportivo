@@ -39,7 +39,7 @@ class PlaceController with ChangeNotifier {
     return place.categoryItem();
   }
 
-  void savePlace(Map<String, Object> data, String flagListType) async {
+  Future<void> savePlace(Map<String, Object> data, String flagListType) async {
     bool hasId = data['id'] != null;
 
     final place = Place(

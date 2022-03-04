@@ -16,9 +16,9 @@ class SearchButton extends StatelessWidget {
         },
         icon: Icon(Icons.search, size: 18),
         style: ButtonStyle(
-            shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
-            foregroundColor: MaterialStateProperty.all(Colors.indigo[900])),
+          shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(8))),
+        ),
         label: Text(label),
       ),
     );
