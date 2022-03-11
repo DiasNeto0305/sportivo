@@ -121,11 +121,11 @@ class ProfilePage extends StatelessWidget {
                     size: 16,
                   ),
                   title: Text(
-                    'Tema',
+                    'Configurações',
                     style: TextStyle(fontWeight: FontWeight.w600),
                   ),
                   onTap: () {
-                    Navigator.of(context).pushNamed('/theme');
+                    Navigator.of(context).pushNamed('/config');
                   },
                 ),
                 ListTile(

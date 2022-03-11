@@ -6,7 +6,6 @@ import 'package:sportivo/components/carousel.dart';
 import 'package:sportivo/components/dropdown_location.dart';
 import 'package:sportivo/components/cards/favorite_cards.dart';
 import 'package:sportivo/controllers/place_controller.dart';
-import 'package:lottie/lottie.dart';
 
 
 

@@ -68,6 +68,7 @@ flutter:
     - assets/img/Natacao.png
     - assets/img/Volei.png
     - assets/img/Yoga.png
+    - assets/img/Logo.png
     - assets/img/profileImage.jpeg
     - assets/animation/lottie.json
 

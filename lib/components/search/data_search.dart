@@ -32,7 +32,7 @@ class DataSearch extends SearchDelegate<String> {
   Widget buildResults(BuildContext context) {
     final provider = Provider.of<PlaceController>(context);
     var placesData = provider.places.where((element) {
-      var placesTitle = element.name as String;
+      var placesTitle = element.name;
       return placesTitle.toLowerCase().startsWith(query.toLowerCase());
     });
     return PlacesPage(placesData: placesData.toList(), appBar: false,);
@@ -42,7 +42,7 @@ class DataSearch extends SearchDelegate<String> {
   Widget buildSuggestions(BuildContext context) {
     final provider = Provider.of<PlaceController>(context);
     var placesData = provider.places.where((element) {
-      var placesTitle = element.name as String;
+      var placesTitle = element.name;
       return placesTitle.toLowerCase().startsWith(query.toLowerCase());
     });
     final suggestionList =

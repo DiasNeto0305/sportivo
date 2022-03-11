@@ -10,7 +10,7 @@ class FavoriteCards extends StatelessWidget {
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: Container(
         width: deviceSize.width * 0.82,
         decoration: BoxDecoration(
@@ -26,6 +26,9 @@ class FavoriteCards extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.r),
                 child: Image.network(
                   favoriteItem.urlImage[0],
+                  fit: BoxFit.cover,
+                  width: deviceSize.width * 0.30,
+                  height: 150,
                 ),
               ),
               Expanded(

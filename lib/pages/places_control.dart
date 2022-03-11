@@ -39,7 +39,7 @@ class _PlacesControlState extends State<PlacesControl> {
                 backgroundImage:
                     NetworkImage(provider.places[index].urlImage[0])),
             title: Text(
-              provider.places[index].name as String,
+              provider.places[index].name,
               style: TextStyle(fontWeight: FontWeight.w700, fontSize: 14.sp),
             ),
             subtitle: Text('Teste'),
@@ -53,7 +53,7 @@ class _PlacesControlState extends State<PlacesControl> {
                           arguments: provider.places[index]);
                     },
                     icon: Icon(Icons.edit),
-                    color: Theme.of(context).primaryColor,
+                    color: Colors.indigo,
                   ),
                   IconButton(
                     onPressed: () async {

@@ -5,7 +5,11 @@ import 'package:sportivo/repositories/place_list.dart';
 
 class PlaceController with ChangeNotifier {
   PlaceList placeList = PlaceList();
+  String _token;
+  String _userId;
   List<Place> _items = [];
+
+  PlaceController(this._token, this._userId, this._items);
 
   List get favorites {
     return _items.where((place) => place.isFavorite == true).toList();
@@ -23,7 +27,7 @@ class PlaceController with ChangeNotifier {
     return dummyData.categories.length;
   }
 
-  List get places {
+  List<Place> get places {
     return _items;
   }
 
@@ -51,27 +55,27 @@ class PlaceController with ChangeNotifier {
       urlImage: data['urlImage'] as List,
     );
     if (hasId) {
-      await placeList.updatePlace(place, flagListType);
+      await placeList.updatePlace(place, flagListType, _token);
       loadPlaces();
     } else {
-      await placeList.addPlace(place);
+      await placeList.addPlace(place, _token);
       loadPlaces();
     }
   }
 
   Future<void> removePlace(Place place) async {
-    await placeList.removePlace(place.id);
+    await placeList.removePlace(place.id, _token);
     loadPlaces();
   }
 
   Future<void> loadPlaces() async {
-    _items = await placeList.loadPlaces();
+    _items = await placeList.loadPlaces(_token, _userId);
     notifyListeners();
   }
 
   Future<void> toggleFavorite(Place place) async {
     place.isFavorite = !place.isFavorite;
-    await placeList.toggleFavorite(place);
+    await placeList.toggleFavorite(place, _token, _userId);
     loadPlaces();
   }
 }

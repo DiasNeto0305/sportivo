@@ -15,15 +15,21 @@ class _DropdownLocationState extends State<DropdownLocation> {
   Widget build(BuildContext context) {
     return DropdownButton<String>(
       value: dropdownValue,
-      icon: const Icon(Icons.arrow_drop_down, color: Colors.indigo,),
+      icon: Icon(
+        Icons.arrow_drop_down,
+        color: Colors.indigo,
+      ),
       elevation: 16,
-      style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+      ),
       onChanged: (String? newValue) {
         setState(() {
           dropdownValue = newValue!;
         });
       },
-      items: dummyData.locationPlaces.map<DropdownMenuItem<String>>((String value) {
+      items: dummyData.locationPlaces
+          .map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),

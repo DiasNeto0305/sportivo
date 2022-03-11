@@ -2,9 +2,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:sportivo/controllers/auth_controller.dart';
 import 'package:sportivo/controllers/place_controller.dart';
 import 'package:sportivo/controllers/theme_controller.dart';
 import 'package:sportivo/pages/bottom_navigation.dart';
+import 'package:sportivo/pages/config_page.dart';
 import 'package:sportivo/pages/loading_page.dart';
 import 'package:sportivo/pages/places_form.dart';
 import 'package:sportivo/pages/theme_page.dart';
@@ -25,24 +27,31 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: LayoutBuilder(builder: (context, constraints) {
-        ScreenUtil.init(
-          constraints,
-          designSize: Size(411, 866),
-          context: context
-        );
+        ScreenUtil.init(constraints,
+            designSize: Size(411, 866), context: context);
         return MultiProvider(
           providers: [
             ChangeNotifierProvider(
-              create: (_) => PlaceController(),
+              create: (_) => AuthController(),
+            ),
+            ChangeNotifierProxyProvider<AuthController, PlaceController>(
+              create: (_) => PlaceController('', '', []),
+              update: (ctx, auth, previous) {
+                return PlaceController(
+                  auth.token ?? '',
+                  auth.userId ?? '',
+                  previous?.places ?? [],
+                );
+              },
             ),
             ChangeNotifierProvider(
               create: (_) => ThemeController(),
-            )
+            ),
           ],
           builder: (context, _) {
             final selectedIndex =
                 Provider.of<ThemeController>(context).selectedTheme;
-    
+
             return MaterialApp(
               title: 'Sportivo',
               themeMode: themeMode[selectedIndex],
@@ -58,7 +67,9 @@ class MyApp extends StatelessWidget {
               routes: {
                 '/place-form': (ctx) => PlacesForm(),
                 '/theme': (ctx) => ThemePage(),
-                '/default': (ctx) => BottomNavigation()
+                '/default': (ctx) => BottomNavigation(),
+                '/loading': (ctx) => LoadingPage(),
+                '/config': (ctx) => ConfigPage()
               },
             );
           },
