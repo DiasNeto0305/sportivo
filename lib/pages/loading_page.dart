@@ -14,62 +14,42 @@ class LoadingPage extends StatefulWidget {
 }
 
 class _LoadingPageState extends State<LoadingPage> {
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    AuthController auth = Provider.of(context);
+    AuthController auth = Provider.of<AuthController>(context);
     if (auth.isAuth) {
-      Provider.of<PlaceController>(context, listen: false)
-          .loadPlaces()
-          .then((value) {
-        Future.delayed(Duration(seconds: 1), () {
-          Navigator.of(context).push(
-            PageRouteBuilder(
-                pageBuilder: ((context, animation, secondaryAnimation) {
-                  return BottomNavigation();
-                }),
-                transitionDuration: Duration(seconds: 2),
-                transitionsBuilder: (context, animation, _, child) =>
-                    FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    )),
-          );
-        });
-      }).catchError((error) {
-        print('Eu entrei');
-        Future.delayed(Duration(seconds: 1), () {
-          Navigator.of(context).push(
-            PageRouteBuilder(
-                pageBuilder: ((context, animation, secondaryAnimation) {
-                  return BottomNavigation();
-                }),
-                transitionDuration: Duration(seconds: 2),
-                transitionsBuilder: (context, animation, _, child) =>
-                    FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    )),
-          );
-        });
-      });
+      _loadPlacesAndNavigate(BottomNavigation());
     } else {
-      Future.delayed(Duration(seconds: 1), () {
-        Navigator.of(context).push(
-          PageRouteBuilder(
-              pageBuilder: ((context, animation, secondaryAnimation) {
-                return AuthPage();
-              }),
-              transitionDuration: Duration(seconds: 2),
-              transitionsBuilder: (context, animation, _, child) =>
-                  FadeTransition(
-                    opacity: animation,
-                    child: child,
-                  )),
-        );
-      });
+      _navigateTo(AuthPage());
     }
+  }
+
+  void _loadPlacesAndNavigate(Widget destination) {
+    PlaceController placeController =
+        Provider.of<PlaceController>(context, listen: false);
+    placeController.loadPlaces().then((_) {
+      _navigateTo(destination);
+    }).catchError((error) {
+      _navigateTo(destination);
+    });
+  }
+
+  void _navigateTo(Widget destination) {
+    Future.delayed(Duration(seconds: 1), () {
+      Navigator.of(context).push(
+        PageRouteBuilder(
+            pageBuilder: ((context, animation, secondaryAnimation) {
+              return destination;
+            }),
+            transitionDuration: Duration(seconds: 2),
+            transitionsBuilder: (context, animation, _, child) =>
+                FadeTransition(
+                  opacity: animation,
+                  child: child,
+                )),
+      );
+    });
   }
 
   @override
