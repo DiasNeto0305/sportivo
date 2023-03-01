@@ -38,6 +38,31 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
+  Widget _logo(double height) {
+    return Column(
+      children: [
+        SizedBox(
+          height: height + 100,
+        ),
+        Image.asset('assets/img/Logo.png'),
+        Text(
+          'SPORTIVO',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          'Seu aplicativo de práticas esportivas',
+          style: TextStyle(fontSize: 12),
+        ),
+        SizedBox(
+          height: 30,
+        ),
+      ],
+    );
+  }
+
   Widget _authForm(BuildContext context, bool _isLogin) {
     final provider = Provider.of<AuthController>(context);
 
@@ -105,6 +130,7 @@ class _AuthPageState extends State<AuthPage> {
             padding: const EdgeInsets.all(8),
             child: TextFormField(
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(16),
                 labelText: 'Email',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -121,6 +147,7 @@ class _AuthPageState extends State<AuthPage> {
               obscureText: true,
               controller: _passwordController,
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.all(16),
                 labelText: 'Senha',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
@@ -137,6 +164,7 @@ class _AuthPageState extends State<AuthPage> {
               child: TextFormField(
                 obscureText: true,
                 decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(16),
                     labelText: 'Confirmar Senha',
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8))),
@@ -155,6 +183,9 @@ class _AuthPageState extends State<AuthPage> {
             child: Container(
               width: double.infinity,
               child: ElevatedButton.icon(
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all(EdgeInsets.all(12)),
+                ),
                 icon: FaIcon(FontAwesomeIcons.signInAlt),
                 label: Text(
                   _isLogin ? 'Entrar' : 'Registrar',
@@ -171,31 +202,6 @@ class _AuthPageState extends State<AuthPage> {
           )
         ],
       ),
-    );
-  }
-
-  Widget _logo(double height) {
-    return Column(
-      children: [
-        SizedBox(
-          height: height + 100,
-        ),
-        Image.asset('assets/img/Logo.png'),
-        Text(
-          'SPORTIVO',
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Text(
-          'Seu aplicativo de práticas esportivas',
-          style: TextStyle(fontSize: 12),
-        ),
-        SizedBox(
-          height: 30,
-        ),
-      ],
     );
   }
 }
