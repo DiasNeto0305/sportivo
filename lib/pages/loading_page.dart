@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:sportivo/controllers/auth_controller.dart';
 import 'package:sportivo/controllers/place_controller.dart';
@@ -31,7 +30,8 @@ class _LoadingPageState extends State<LoadingPage> {
     placeController.loadPlaces().then((_) {
       _navigateTo(destination);
     }).catchError((error) {
-      _navigateTo(destination);
+      print(error);
+      Navigator.of(context).pushNamed('/error');
     });
   }
 
@@ -56,9 +56,7 @@ class _LoadingPageState extends State<LoadingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Lottie.asset(
-          'assets/animation/lottie.json',
-        ),
+        child: CircularProgressIndicator(),
       ),
     );
   }

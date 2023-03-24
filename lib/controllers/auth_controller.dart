@@ -25,8 +25,13 @@ class AuthController with ChangeNotifier {
     }
   }
 
-  void logout() {
-    _auth.logout();
+  Future<void> loginWithGoogle() async {
+    await _auth.loginWithGoogle();
+    notifyListeners();
+  }
+
+  void logout() async {
+    await _auth.logout();
     notifyListeners();
     print(isAuth);
   }

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:http/http.dart' as http;
 import 'package:sportivo/exceptions/auth_exception.dart';
 
@@ -8,6 +10,8 @@ class Auth {
   String? _email;
   String? _userId;
   DateTime? _expiryDate;
+  bool _googleLoginFlag = false;
+  GoogleSignIn _googleSignIn = GoogleSignIn();
 
   bool get isAuth {
     final isValid = _expiryDate?.isAfter(DateTime.now()) ?? false;
@@ -64,10 +68,43 @@ class Auth {
     await _authenticate(email, password, 'signInWithPassword');
   }
 
-  void logout() {
+  Future<void> logout() async {
     _token = null;
     _email = null;
     _userId = null;
     _expiryDate = null;
+    if (_googleLoginFlag) await _googleSignIn.disconnect();
+    _googleLoginFlag = false;
+  }
+
+  Future<void> loginWithGoogle() async {
+    final googleSignInAccount = await _googleSignIn.signIn();
+
+    if (googleSignInAccount != null) {
+      // Obter as credenciais de autenticação do Google
+      final GoogleSignInAuthentication googleAuth =
+          await googleSignInAccount.authentication;
+
+      // Crie um provedor de autenticação do Google
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      // Use as credenciais para autenticar com o Firebase
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      final user = userCredential.user;
+      print(userCredential.user);
+
+      _token = await user?.getIdToken();
+      _email = user?.email;
+      _userId = user?.uid;
+      _googleLoginFlag = true;
+      _expiryDate = DateTime.now().add(
+        Duration(seconds: 3600),
+      );
+    }
   }
 }

@@ -8,16 +8,26 @@ class PlaceList {
   final _baseUrl = 'https://sportivo-backend-default-rtdb.firebaseio.com';
 
   Future<List<Place>> loadPlaces(String token, String userId) async {
+    print('userId' + userId);
+    print('token' + token);
+
     List<Place> items = [];
     final response = await http.get(
       Uri.parse('$_baseUrl/places.json?auth=$token'),
     );
 
+    print('getPlaces' + '$_baseUrl/places.json?auth=$token');
+    print(response.body);
+
     final favResponse = await http.get(
       Uri.parse('$_baseUrl/userFavorites/$userId.json?auth=$token'),
     );
 
-    Map<String, dynamic> favData = favResponse.body == 'null' ? {} : jsonDecode(favResponse.body); 
+    print('userFavorites' + '$_baseUrl/userFavorites/$userId.json?auth=$token');
+    print(favResponse.body);
+
+    Map<String, dynamic> favData =
+        favResponse.body == 'null' ? {} : jsonDecode(favResponse.body);
 
     Map<String, dynamic> data = jsonDecode(response.body);
     data.forEach((placeId, placeData) {
@@ -81,7 +91,7 @@ class PlaceList {
         FirebaseStorage.instanceFor(bucket: 'sportivo-backend.appspot.com');
     List<String> urlList = [];
     int index = 0;
-    print(storage);
+    // print(storage + 'crazy');
     urlList = await Future.wait(imageList.map((file) async {
       var value;
       final imageRef = storage

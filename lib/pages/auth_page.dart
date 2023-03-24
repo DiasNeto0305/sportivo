@@ -100,6 +100,17 @@ class _AuthPageState extends State<AuthPage> {
       } on AuthException catch (error) {
         _showErrorSnackbar(error.toString());
       } catch (error) {
+        print(error);
+        _showErrorSnackbar('Ocorreu um erro inesperado');
+      }
+    }
+
+    Future signIn() async {
+      try {
+        await provider.loginWithGoogle();
+        Navigator.of(context).pushNamed('/loading');
+      } catch (error) {
+        print(error);
         _showErrorSnackbar('Ocorreu um erro inesperado');
       }
     }
@@ -180,18 +191,31 @@ class _AuthPageState extends State<AuthPage> {
             ),
           Padding(
             padding: const EdgeInsets.all(8),
-            child: Container(
-              width: double.infinity,
-              child: ElevatedButton.icon(
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(EdgeInsets.all(12)),
-                ),
-                icon: FaIcon(FontAwesomeIcons.signInAlt),
-                label: Text(
-                  _isLogin ? 'Entrar' : 'Registrar',
-                ),
-                onPressed: _submit,
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.black,
+                  minimumSize: Size(double.infinity, 48)),
+              onPressed: _submit,
+              icon: FaIcon(
+                FontAwesomeIcons.signInAlt,
               ),
+              label: Text(
+                _isLogin ? 'Entrar' : 'Registrar',
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8),
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white70,
+                  foregroundColor: Colors.black,
+                  minimumSize: Size(double.infinity, 48)),
+              onPressed: signIn,
+              icon: FaIcon(
+                FontAwesomeIcons.google,
+              ),
+              label: Text("Entrar com Google"),
             ),
           ),
           TextButton(
