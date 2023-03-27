@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:sportivo/controllers/auth_controller.dart';
 import 'package:sportivo/pages/places_control.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -8,6 +10,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<AuthController>(context).loggedUser;
     final height = MediaQuery.of(context).viewPadding.top;
     return Padding(
       padding: EdgeInsets.only(top: 16.h + height.h),
@@ -60,7 +63,7 @@ class ProfilePage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 32),
                   child: Text(
-                    'Fernando Antônio Dias',
+                    user?.displayName ?? '',
                     style:
                         TextStyle(fontSize: 22.sp, fontWeight: FontWeight.w700),
                   ),

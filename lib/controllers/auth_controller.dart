@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sportivo/enum/auth_mode.dart';
 import 'package:sportivo/repositories/auth.dart';
@@ -46,6 +47,10 @@ class AuthController with ChangeNotifier {
 
   String? get userId {
     return _auth.userId;
+  }
+
+  User? get loggedUser {
+    return _auth.loggedUser;
   }
 
   get authMode => _authMode;

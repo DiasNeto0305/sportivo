@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:http/http.dart' as http;
 import 'package:sportivo/exceptions/auth_exception.dart';
 
 class Auth {
@@ -10,6 +7,7 @@ class Auth {
   String? _email;
   String? _userId;
   DateTime? _expiryDate;
+  User? _loggedUser;
   bool _googleLoginFlag = false;
   GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -30,42 +28,50 @@ class Auth {
     return isAuth ? _userId : null;
   }
 
+  User? get loggedUser {
+    return isAuth ? _loggedUser : null;
+  }
+
   DateTime? get expiryDate {
     return isAuth ? _expiryDate : null;
   }
 
-  Future<void> _authenticate(
-      String email, String password, String urlFragment) async {
-    final url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:$urlFragment?key=AIzaSyAiAnpVxgHIeY-nw8Bv01i4Bs2Nm8FBUW0';
-    final response = await http.post(
-      Uri.parse(url),
-      body: jsonEncode(
-        {'email': email, 'password': password, 'returnSecureToken': true},
-      ),
-    );
-
-    final body = jsonDecode(response.body);
-
-    if (body['error'] != null) {
-      throw AuthException(body['error']['message']);
-    } else {
-      _token = body['idToken'];
-      _email = body['email'];
-      _userId = body['localId'];
-
-      _expiryDate = DateTime.now().add(
-        Duration(seconds: int.parse(body['expiresIn'])),
+  Future<void> signUp(String email, String password) async {
+    try {
+      final userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
       );
+      print(userCredential.user);
+    } on FirebaseAuthException catch (error) {
+      throw AuthException(error.code);
+    } catch (error) {
+      AuthException('Erro inesperado');
     }
   }
 
-  Future<void> signUp(String email, String password) async {
-    await _authenticate(email, password, 'signUp');
-  }
-
   Future<void> signIn(String email, String password) async {
-    await _authenticate(email, password, 'signInWithPassword');
+    try {
+      final userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      final user = userCredential.user;
+
+      _token = await user?.getIdToken();
+      _email = user?.email;
+      _userId = user?.uid;
+      await user?.updateDisplayName('Clara Freitas Santos');
+      _loggedUser = user;
+
+      _expiryDate = DateTime.now().add(
+        Duration(seconds: 3600),
+      );
+    } on FirebaseAuthException catch (error) {
+      throw AuthException(error.code);
+    } catch (error) {
+      AuthException('Erro inesperado');
+    }
   }
 
   Future<void> logout() async {
@@ -78,33 +84,38 @@ class Auth {
   }
 
   Future<void> loginWithGoogle() async {
-    final googleSignInAccount = await _googleSignIn.signIn();
+    try {
+      final googleSignInAccount = await _googleSignIn.signIn();
 
-    if (googleSignInAccount != null) {
-      // Obter as credenciais de autenticação do Google
-      final GoogleSignInAuthentication googleAuth =
-          await googleSignInAccount.authentication;
+      if (googleSignInAccount != null) {
+        // Obter as credenciais de autenticação do Google
+        final GoogleSignInAuthentication googleAuth =
+            await googleSignInAccount.authentication;
 
-      // Crie um provedor de autenticação do Google
-      final OAuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
-        idToken: googleAuth.idToken,
-      );
+        // Crie um provedor de autenticação do Google
+        final OAuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
 
-      // Use as credenciais para autenticar com o Firebase
-      final UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+        // Use as credenciais para autenticar com o Firebase
+        final UserCredential userCredential =
+            await FirebaseAuth.instance.signInWithCredential(credential);
 
-      final user = userCredential.user;
-      print(userCredential.user);
+        final user = userCredential.user;
+        print(userCredential.user);
 
-      _token = await user?.getIdToken();
-      _email = user?.email;
-      _userId = user?.uid;
-      _googleLoginFlag = true;
-      _expiryDate = DateTime.now().add(
-        Duration(seconds: 3600),
-      );
+        _token = await user?.getIdToken();
+        _email = user?.email;
+        _userId = user?.uid;
+        _loggedUser = user;
+        _googleLoginFlag = true;
+        _expiryDate = DateTime.now().add(
+          Duration(seconds: 3600),
+        );
+      }
+    } catch (error) {
+      throw AuthException('Erro inesperado');
     }
   }
 }

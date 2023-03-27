@@ -1,11 +1,10 @@
 class AuthException implements Exception {
   static const Map<String, String> errors = {
-    'EMAIL_EXISTS': 'E-mail já cadastrado',
-    'OPERATION_NOT_ALLOWED': 'Operação não permitida',
-    'TOO_MANY_ATTEMPTS_TRY_LATER': 'Acesso bloqueado. Tente mais tarde',
-    'EMAIL_NOT_FOUND': 'E-mail não encontrado',
-    'INVALID_PASSWORD': 'Senha incorreta',
-    'USER_DISABLED': 'Usuário desabilitado'
+    'email-already-in-use': 'E-mail já cadastrado',
+    'weak-password': 'Senha Fraca',
+    'operation-not-allowed': 'Operação não permitida',
+    'user-not-found': 'Usuáirio não encontrado',
+    'wrong-password': 'Senha incorreta',
   };
 
   final String key;
