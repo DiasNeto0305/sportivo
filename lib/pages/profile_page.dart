@@ -28,7 +28,7 @@ class ProfilePage extends StatelessWidget {
                     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                     child: CircleAvatar(
                       backgroundImage:
-                          AssetImage('assets/img/profileImage.jpeg'),
+                          AssetImage('assets/img/littleboyswimming.png'),
                       radius: 36.r,
                     ),
                     radius: 40.r,
