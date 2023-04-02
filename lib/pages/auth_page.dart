@@ -3,8 +3,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sportivo/controllers/auth_controller.dart';
 import 'package:sportivo/exceptions/auth_exception.dart';
+import 'package:sportivo/utils/constants.dart';
 
 import '../enum/auth_mode.dart';
+import '../utils/utils.dart';
 
 class AuthPage extends StatefulWidget {
   AuthPage({Key? key}) : super(key: key);
@@ -42,18 +44,18 @@ class _AuthPageState extends State<AuthPage> {
     return Column(
       children: [
         SizedBox(
-          height: height + 100,
+          height: height + 50,
         ),
-        Image.asset('assets/img/Logo.png'),
+        Image.asset(Constants.LOGO),
         Text(
-          'SPORTIVO',
+          Constants.APP_NAME,
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         SizedBox(
           height: 10,
         ),
         Text(
-          'Seu aplicativo de práticas esportivas',
+          Constants.APP_SLOGAN,
           style: TextStyle(fontSize: 12),
         ),
         SizedBox(
@@ -65,24 +67,6 @@ class _AuthPageState extends State<AuthPage> {
 
   Widget _authForm(BuildContext context, bool _isLogin) {
     final provider = Provider.of<AuthController>(context);
-
-    void _showErrorSnackbar(String msg) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.red[900],
-          content: Text(
-            msg,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          action: SnackBarAction(
-            label: 'Fechar',
-            textColor: Colors.black,
-            onPressed: () {},
-          ),
-        ),
-      );
-    }
 
     void _submit() async {
       final isValid = _formKey.currentState?.validate() ?? false;
@@ -98,10 +82,10 @@ class _AuthPageState extends State<AuthPage> {
         );
         Navigator.of(context).pushNamed('/loading');
       } on AuthException catch (error) {
-        _showErrorSnackbar(error.toString());
+        showErrorSnackbar(context: context, msg: error.toString());
       } catch (error) {
         print(error);
-        _showErrorSnackbar('Ocorreu um erro inesperado');
+        showErrorSnackbar(context: context, msg: 'Ocorreu um erro inesperado');
       }
     }
 
@@ -111,26 +95,8 @@ class _AuthPageState extends State<AuthPage> {
         Navigator.of(context).pushNamed('/loading');
       } catch (error) {
         print(error);
-        _showErrorSnackbar('Ocorreu um erro inesperado');
+        showErrorSnackbar(context: context, msg: 'Ocorreu um erro inesperado');
       }
-    }
-
-    String? _validateEmail(String? email) {
-      if (email == null || email.trim().isEmpty) {
-        return 'Email é obrigatório.';
-      } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email)) {
-        return 'Por favor, informe um email válido.';
-      }
-      return null;
-    }
-
-    String? _validatePassword(String? password) {
-      if (password == null || password.trim().isEmpty) {
-        return 'Senha é obrigatória.';
-      } else if (password.length < 6) {
-        return 'Senha deve ter pelo menos 6 caracteres.';
-      }
-      return null;
     }
 
     return Form(
@@ -148,7 +114,7 @@ class _AuthPageState extends State<AuthPage> {
                 ),
               ),
               textInputAction: TextInputAction.next,
-              validator: (_email) => _validateEmail(_email),
+              validator: (_email) => validateEmail(_email),
               onSaved: (email) => _authData['email'] = email ?? '',
             ),
           ),
@@ -165,7 +131,7 @@ class _AuthPageState extends State<AuthPage> {
                 ),
               ),
               textInputAction: TextInputAction.next,
-              validator: (_password) => _validatePassword(_password),
+              validator: (_password) => validatePassword(_password),
               onSaved: (password) => _authData['password'] = password ?? '',
             ),
           ),
@@ -193,11 +159,12 @@ class _AuthPageState extends State<AuthPage> {
             padding: const EdgeInsets.all(8),
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  minimumSize: Size(double.infinity, 48)),
+                foregroundColor: Colors.black,
+                minimumSize: Size(double.infinity, 48),
+              ),
               onPressed: _submit,
               icon: FaIcon(
-                FontAwesomeIcons.signInAlt,
+                FontAwesomeIcons.rightToBracket,
               ),
               label: Text(
                 _isLogin ? 'Entrar' : 'Registrar',
@@ -208,9 +175,10 @@ class _AuthPageState extends State<AuthPage> {
             padding: const EdgeInsets.all(8),
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white70,
-                  foregroundColor: Colors.black,
-                  minimumSize: Size(double.infinity, 48)),
+                backgroundColor: Colors.white70,
+                foregroundColor: Colors.black,
+                minimumSize: Size(double.infinity, 48),
+              ),
               onPressed: signIn,
               icon: FaIcon(
                 FontAwesomeIcons.google,

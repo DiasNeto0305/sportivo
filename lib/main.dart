@@ -14,6 +14,7 @@ import 'package:sportivo/pages/places_form.dart';
 import 'package:sportivo/pages/theme_page.dart';
 import 'package:sportivo/theme/darkTheme.dart';
 import 'package:sportivo/theme/lightTheme.dart';
+import 'package:sportivo/utils/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,11 +25,11 @@ void main() async {
 class MyApp extends StatelessWidget {
   static const themeMode = [ThemeMode.light, ThemeMode.dark, ThemeMode.system];
   final routes = {
-    '/place-form': (ctx) => PlacesForm(),
-    '/theme': (ctx) => ThemePage(),
-    '/default': (ctx) => BottomNavigation(),
-    '/loading': (ctx) => LoadingPage(),
-    '/config': (ctx) => ConfigPage(),
+    AppRoutes.PLACE_FORM: (ctx) => PlacesForm(),
+    AppRoutes.THEME: (ctx) => ThemePage(),
+    AppRoutes.DEFAULT: (ctx) => BottomNavigation(),
+    AppRoutes.LOADING: (ctx) => LoadingPage(),
+    AppRoutes.CONFIG: (ctx) => ConfigPage(),
     '/error': (ctx) => ErrorPage(
           errorMessage: '',
         )
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Sportivo',
+      title: Constants.APP_NAME,
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider(
@@ -58,8 +59,7 @@ class MyApp extends StatelessWidget {
           ),
         ],
         child: LayoutBuilder(builder: (context, constraints) {
-          ScreenUtil.init(constraints,
-              designSize: Size(411, 866), context: context);
+          ScreenUtil.init(context, designSize: Size(411, 866));
           return MaterialApp(
             themeMode:
                 themeMode[Provider.of<ThemeController>(context).selectedTheme],

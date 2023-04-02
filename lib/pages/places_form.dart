@@ -46,7 +46,7 @@ class _PlacesFormState extends State<PlacesForm> {
 
   void _pickImages() async {
     final ImagePicker _picker = ImagePicker();
-    final List<XFile>? images = await _picker.pickMultiImage() ?? [];
+    final List<XFile>? images = await _picker.pickMultiImage();
     if (images!.length > 0) {
       _formData['urlImage'] = [];
       for (var image in images) {
