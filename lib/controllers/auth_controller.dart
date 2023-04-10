@@ -1,29 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:sportivo/enum/auth_mode.dart';
 import 'package:sportivo/repositories/auth.dart';
 
 class AuthController with ChangeNotifier {
-  AuthMode _authMode = AuthMode.Login;
   Auth _auth = Auth();
 
-  void switchAuthMode() {
-    if (_authMode == AuthMode.Login) {
-      _authMode = AuthMode.Signup;
-    } else {
-      _authMode = AuthMode.Login;
-    }
+  Future<void> signIn(String email, String password) async {
+    await _auth.signIn(email, password);
     notifyListeners();
   }
 
-  Future<void> login(String email, String password, bool isLogin) async {
-    if (isLogin) {
-      await _auth.signIn(email, password);
-      notifyListeners();
-    } else {
-      await _auth.signUp(email, password);
-      notifyListeners();
-    }
+  Future<void> signUp(String name, String email, String password) async {
+    await _auth.signUp(name, email, password);
+    notifyListeners();
   }
 
   Future<void> loginWithGoogle() async {
@@ -52,6 +41,4 @@ class AuthController with ChangeNotifier {
   User? get loggedUser {
     return _auth.loggedUser;
   }
-
-  get authMode => _authMode;
 }

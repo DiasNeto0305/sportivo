@@ -3,28 +3,20 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sportivo/controllers/auth_controller.dart';
 import 'package:sportivo/exceptions/auth_exception.dart';
+import 'package:sportivo/theme/colors.dart';
 import 'package:sportivo/utils/constants.dart';
 
-import '../enum/auth_mode.dart';
 import '../utils/utils.dart';
 
-class AuthPage extends StatefulWidget {
-  AuthPage({Key? key}) : super(key: key);
+class LoginPage extends StatelessWidget {
+  LoginPage({Key? key}) : super(key: key);
 
-  @override
-  State<AuthPage> createState() => _AuthPageState();
-}
-
-class _AuthPageState extends State<AuthPage> {
   final _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  Map<String, String> _authData = {'email': '', 'password': ''};
+  final Map<String, String> _authData = {'email': '', 'password': ''};
 
   @override
   Widget build(BuildContext context) {
-    bool _isLogin() =>
-        Provider.of<AuthController>(context).authMode == AuthMode.Login;
-
     final height = MediaQuery.of(context).viewPadding.top;
 
     return Scaffold(
@@ -33,7 +25,7 @@ class _AuthPageState extends State<AuthPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _logo(height),
-            _authForm(context, _isLogin()),
+            _authForm(context),
           ],
         ),
       ),
@@ -48,7 +40,7 @@ class _AuthPageState extends State<AuthPage> {
         ),
         Image.asset(Constants.LOGO),
         Text(
-          Constants.APP_NAME,
+          Constants.APP_NAME.toUpperCase(),
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
         ),
         SizedBox(
@@ -65,53 +57,49 @@ class _AuthPageState extends State<AuthPage> {
     );
   }
 
-  Widget _authForm(BuildContext context, bool _isLogin) {
+  Widget _authForm(BuildContext context) {
     final provider = Provider.of<AuthController>(context);
 
-    void _submit() async {
+    void _login() async {
       final isValid = _formKey.currentState?.validate() ?? false;
       if (!isValid) {
         return;
       }
       _formKey.currentState?.save();
       try {
-        await provider.login(
+        await provider.signIn(
           _authData['email'] ?? '',
           _authData['password'] ?? '',
-          _isLogin,
         );
         Navigator.of(context).pushNamed('/loading');
       } on AuthException catch (error) {
-        showErrorSnackbar(context: context, msg: error.toString());
+        showSnackbar(context: context, msg: error.toString(), color: Colors.red[900]);
       } catch (error) {
         print(error);
-        showErrorSnackbar(context: context, msg: 'Ocorreu um erro inesperado');
+        showSnackbar(context: context, msg: 'Ocorreu um erro inesperado', color: Colors.red[900]);
       }
     }
 
-    Future signIn() async {
+    Future _loginWithGoogle() async {
       try {
         await provider.loginWithGoogle();
         Navigator.of(context).pushNamed('/loading');
       } catch (error) {
         print(error);
-        showErrorSnackbar(context: context, msg: 'Ocorreu um erro inesperado');
+        showSnackbar(context: context, msg: 'Ocorreu um erro inesperado', color: Colors.red[900]);
       }
     }
 
     return Form(
       key: _formKey,
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
             padding: const EdgeInsets.all(8),
             child: TextFormField(
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(16),
                 labelText: 'Email',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
               ),
               textInputAction: TextInputAction.next,
               validator: (_email) => validateEmail(_email),
@@ -124,62 +112,39 @@ class _AuthPageState extends State<AuthPage> {
               obscureText: true,
               controller: _passwordController,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(16),
                 labelText: 'Senha',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
               ),
               textInputAction: TextInputAction.next,
               validator: (_password) => validatePassword(_password),
               onSaved: (password) => _authData['password'] = password ?? '',
             ),
           ),
-          if (!_isLogin)
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: TextFormField(
-                obscureText: true,
-                decoration: InputDecoration(
-                    contentPadding: EdgeInsets.all(16),
-                    labelText: 'Confirmar Senha',
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8))),
-                textInputAction: TextInputAction.next,
-                validator: (_password) {
-                  final password = _password ?? '';
-                  if (_passwordController.text != password) {
-                    return 'Senhas informadas não conferem';
-                  }
-                  return null;
-                },
-              ),
-            ),
           Padding(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.black,
+                backgroundColor: SportivoColors.primary,
+                foregroundColor: SportivoColors.lightBackground,
                 minimumSize: Size(double.infinity, 48),
               ),
-              onPressed: _submit,
+              onPressed: _login,
               icon: FaIcon(
                 FontAwesomeIcons.rightToBracket,
               ),
               label: Text(
-                _isLogin ? 'Entrar' : 'Registrar',
+                'Entrar',
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(8),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white70,
-                foregroundColor: Colors.black,
+                backgroundColor: SportivoColors.primaryDark,
+                foregroundColor: SportivoColors.lightBackground,
                 minimumSize: Size(double.infinity, 48),
               ),
-              onPressed: signIn,
+              onPressed: _loginWithGoogle,
               icon: FaIcon(
                 FontAwesomeIcons.google,
               ),
@@ -187,11 +152,23 @@ class _AuthPageState extends State<AuthPage> {
             ),
           ),
           TextButton(
-            onPressed: provider.switchAuthMode,
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppRoutes.PASSWORD_RECOVERY);
+            },
             child: Text(
-              _isLogin ? 'Deseja registrar?' : 'Já possui cadastro?',
+              'Esqueceu sua senha?',
+              style: TextStyle(color: SportivoColors.primaryLight),
             ),
-          )
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppRoutes.SIGNUP);
+            },
+            child: Text(
+              'Ainda não possui conta? Cadastre-se',
+              style: TextStyle(color: SportivoColors.primaryLight),
+            ),
+          ),
         ],
       ),
     );

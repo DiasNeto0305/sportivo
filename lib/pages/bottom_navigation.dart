@@ -3,6 +3,7 @@ import 'package:sportivo/pages/events_page.dart';
 import 'package:sportivo/pages/home_page.dart';
 import 'package:sportivo/pages/profile_page.dart';
 import 'package:sportivo/pages/search_page.dart';
+import 'package:sportivo/theme/colors.dart';
 
 class BottomNavigation extends StatefulWidget {
   const BottomNavigation({Key? key}) : super(key: key);
@@ -79,7 +80,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         selectedFontSize: 12,
         unselectedFontSize: 12,
         type: BottomNavigationBarType.fixed,
-        selectedIconTheme: IconThemeData(size: 22, color: Colors.indigo),
+        selectedIconTheme: IconThemeData(size: 22, color: SportivoColors.primary),
         unselectedIconTheme: Theme.of(context).iconTheme,
         onTap: _onItemTapped,
       ),

@@ -18,4 +18,6 @@ class AppRoutes {
   static const DEFAULT = '/default';
   static const LOADING = '/loading';
   static const CONFIG = '/config';
+  static const SIGNUP = '/signup';
+  static const PASSWORD_RECOVERY = '/password-recovery';
 }

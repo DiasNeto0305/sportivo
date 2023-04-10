@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sportivo/controllers/auth_controller.dart';
 import 'package:sportivo/pages/places_control.dart';
+import 'package:sportivo/theme/colors.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class ProfilePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 CircleAvatar(
-                  backgroundColor: Colors.indigo,
+                  backgroundColor: SportivoColors.primary,
                   radius: 42.r,
                   child: CircleAvatar(
                     backgroundColor: Theme.of(context).scaffoldBackgroundColor,

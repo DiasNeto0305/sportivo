@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-void showErrorSnackbar({required BuildContext context, required String msg}) {
+void showSnackbar({required BuildContext context, required String msg, required Color? color}) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(
       behavior: SnackBarBehavior.floating,
-      backgroundColor: Colors.red[900],
+      backgroundColor: color,
       content: Text(
         msg,
         style: TextStyle(fontWeight: FontWeight.bold),
@@ -16,6 +16,13 @@ void showErrorSnackbar({required BuildContext context, required String msg}) {
       ),
     ),
   );
+}
+
+String? validateName(String? name) {
+  if (name == null || name.trim().isEmpty) {
+    return 'Nome é obrigatório.';
+  }
+  return null;
 }
 
 String? validateEmail(String? email) {

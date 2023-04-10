@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sportivo/controllers/place_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:sportivo/theme/colors.dart';
 
 class PlacesControl extends StatefulWidget {
   const PlacesControl({Key? key}) : super(key: key);
@@ -53,7 +54,7 @@ class _PlacesControlState extends State<PlacesControl> {
                           arguments: provider.places[index]);
                     },
                     icon: Icon(Icons.edit),
-                    color: Colors.indigo,
+                    color: SportivoColors.primary,
                   ),
                   IconButton(
                     onPressed: () async {
@@ -76,7 +77,7 @@ class _PlacesControlState extends State<PlacesControl> {
                             ),
                           )
                         : Icon(Icons.delete),
-                    color: Theme.of(context).errorColor,
+                    color: Theme.of(context).colorScheme.error,
                   )
                 ],
               ),

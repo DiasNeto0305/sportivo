@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sportivo/controllers/auth_controller.dart';
 import 'package:sportivo/controllers/place_controller.dart';
-import 'package:sportivo/pages/auth_page.dart';
+import 'package:sportivo/pages/login_page.dart';
 import 'package:sportivo/pages/bottom_navigation.dart';
 
 class LoadingPage extends StatefulWidget {
@@ -20,7 +20,7 @@ class _LoadingPageState extends State<LoadingPage> {
     if (auth.isAuth) {
       _loadPlacesAndNavigate(BottomNavigation());
     } else {
-      _navigateTo(AuthPage());
+      _navigateTo(LoginPage());
     }
   }
 
@@ -42,7 +42,7 @@ class _LoadingPageState extends State<LoadingPage> {
             pageBuilder: ((context, animation, secondaryAnimation) {
               return destination;
             }),
-            transitionDuration: Duration(seconds: 2),
+            transitionDuration: Duration(seconds: 1),
             transitionsBuilder: (context, animation, _, child) =>
                 FadeTransition(
                   opacity: animation,

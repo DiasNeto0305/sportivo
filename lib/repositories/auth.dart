@@ -36,14 +36,18 @@ class Auth {
     return isAuth ? _expiryDate : null;
   }
 
-  Future<void> signUp(String email, String password) async {
+  Future<void> signUp(String name, String email, String password) async {
     try {
       final userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      print(userCredential.user);
+
+      final user = userCredential.user;
+      await user?.updateDisplayName(name);
+
+      print(user);
     } on FirebaseAuthException catch (error) {
       throw AuthException(error.code);
     } catch (error) {
@@ -61,7 +65,6 @@ class Auth {
       _token = await user?.getIdToken();
       _email = user?.email;
       _userId = user?.uid;
-      await user?.updateDisplayName('Clara Freitas Santos');
       _loggedUser = user;
 
       _expiryDate = DateTime.now().add(

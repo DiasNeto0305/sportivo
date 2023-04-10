@@ -10,7 +10,9 @@ import 'package:sportivo/pages/bottom_navigation.dart';
 import 'package:sportivo/pages/config_page.dart';
 import 'package:sportivo/pages/error_page.dart';
 import 'package:sportivo/pages/loading_page.dart';
+import 'package:sportivo/pages/password_recovery_page.dart';
 import 'package:sportivo/pages/places_form.dart';
+import 'package:sportivo/pages/signup_page.dart';
 import 'package:sportivo/pages/theme_page.dart';
 import 'package:sportivo/theme/darkTheme.dart';
 import 'package:sportivo/theme/lightTheme.dart';
@@ -30,6 +32,8 @@ class MyApp extends StatelessWidget {
     AppRoutes.DEFAULT: (ctx) => BottomNavigation(),
     AppRoutes.LOADING: (ctx) => LoadingPage(),
     AppRoutes.CONFIG: (ctx) => ConfigPage(),
+    AppRoutes.SIGNUP: (ctx) => SignupPage(),
+    AppRoutes.PASSWORD_RECOVERY: (ctx) => PasswordRecoveryPage(),
     '/error': (ctx) => ErrorPage(
           errorMessage: '',
         )
@@ -71,22 +75,7 @@ class MyApp extends StatelessWidget {
           );
         }),
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
-
-
-      // home: StreamBuilder(
-      //   stream: _initialization.asStream(),
-      //   builder: (context, snapshot) {
-      //     if (snapshot.connectionState == ConnectionState.waiting) {
-      //       return Center(
-      //         child: Text("Firebase sendo iniciado"),
-      //       );
-      //     } else if (snapshot.connectionState == ConnectionState.done) {
-      //       return LoadingPage();
-      //     } else {
-      //       return Center(child: Text('Erro ao inicializar o Firebase.'));
-      //     }
-      //   },
-      // ),

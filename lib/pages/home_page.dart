@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:sportivo/components/carousel.dart';
-import 'package:sportivo/components/dropdown_location.dart';
 import 'package:sportivo/components/cards/favorite_cards.dart';
 import 'package:sportivo/controllers/place_controller.dart';
+import 'package:sportivo/utils/constants.dart';
 
 
 
@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   paddingDefault() {
     return EdgeInsets.only(
       top: 16.h,
-      left: 40.w,
+      left: 16.w,
     );
   }
 
@@ -43,8 +43,20 @@ class _HomePageState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 16.h + height.h, left: 40.w),
-                child: DropdownLocation(),
+                padding: EdgeInsets.only(top: 16.h + height.h, right: 16.w, left: 16.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      Constants.APP_NAME.toUpperCase(),
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 18,
+                      ),
+                    ),
+                    IconButton(onPressed: () {}, icon: Icon(Icons.favorite_border_outlined))
+                  ],
+                ),
               ),
               Padding(
                 padding: paddingDefault(),

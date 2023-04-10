@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sportivo/data/dummy_data.dart' as dummyData;
+import 'package:sportivo/theme/colors.dart';
 
 class DropdownLocation extends StatefulWidget {
   const DropdownLocation({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class _DropdownLocationState extends State<DropdownLocation> {
       value: dropdownValue,
       icon: Icon(
         Icons.arrow_drop_down,
-        color: Colors.indigo,
+        color: SportivoColors.primary,
       ),
       elevation: 16,
       style: TextStyle(
