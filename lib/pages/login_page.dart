@@ -21,12 +21,15 @@ class LoginPage extends StatelessWidget {
 
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _logo(height),
-            _authForm(context),
-          ],
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              _logo(height),
+              _authForm(context),
+            ],
+          ),
         ),
       ),
     );
@@ -36,22 +39,26 @@ class LoginPage extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          height: height + 50,
+          height: height,
         ),
         Image.asset(Constants.LOGO),
         Text(
-          Constants.APP_NAME.toUpperCase(),
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          Constants.APP_NAME,
+          style: TextStyle(
+            fontFamily: 'Alkatra',
+            fontSize: 24,
+            fontWeight: FontWeight.w500,
+          ),
         ),
         SizedBox(
           height: 10,
         ),
         Text(
           Constants.APP_SLOGAN,
-          style: TextStyle(fontSize: 12),
+          style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
         ),
         SizedBox(
-          height: 30,
+          height: 10,
         ),
       ],
     );
@@ -73,10 +80,14 @@ class LoginPage extends StatelessWidget {
         );
         Navigator.of(context).pushNamed('/loading');
       } on AuthException catch (error) {
-        showSnackbar(context: context, msg: error.toString(), color: Colors.red[900]);
+        showSnackbar(
+            context: context, msg: error.toString(), color: Colors.red[900]);
       } catch (error) {
         print(error);
-        showSnackbar(context: context, msg: 'Ocorreu um erro inesperado', color: Colors.red[900]);
+        showSnackbar(
+            context: context,
+            msg: 'Ocorreu um erro inesperado',
+            color: Colors.red[900]);
       }
     }
 
@@ -86,7 +97,10 @@ class LoginPage extends StatelessWidget {
         Navigator.of(context).pushNamed('/loading');
       } catch (error) {
         print(error);
-        showSnackbar(context: context, msg: 'Ocorreu um erro inesperado', color: Colors.red[900]);
+        showSnackbar(
+            context: context,
+            msg: 'Ocorreu um erro inesperado',
+            color: Colors.red[900]);
       }
     }
 
