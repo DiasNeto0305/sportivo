@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sportivo/components/carousel.dart';
 import 'package:sportivo/components/cards/favorite_cards.dart';
@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
       children: [
         Padding(
           padding: EdgeInsets.only(
-              top: 16.h + height.h, right: 16.w, left: 16.w, bottom: 16.h),
+              top: 16.h + height.h, left: 16.w, bottom: 16.h),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -54,8 +54,23 @@ class _HomePageState extends State<HomePage> {
                   fontSize: 22,
                 ),
               ),
-              IconButton(
-                  onPressed: () {}, icon: Icon(Icons.favorite_border_outlined))
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: FaIcon(FontAwesomeIcons.heart),
+                    iconSize: 18,
+                    padding: EdgeInsets.all(0),
+                  ),
+                  IconButton(
+                    onPressed: () {},
+                    icon: FaIcon(FontAwesomeIcons.ellipsisVertical),
+                    padding: EdgeInsets.all(0),
+                    iconSize: 18,
+                  ),
+                ],
+              ),
             ],
           ),
         ),
@@ -63,10 +78,7 @@ class _HomePageState extends State<HomePage> {
           padding: paddingDefault(),
           child: Text(
             sugestoes,
-            style: GoogleFonts.poppins(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w600,
-            ),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
         Carousel(
@@ -76,10 +88,7 @@ class _HomePageState extends State<HomePage> {
           padding: paddingDefault(),
           child: Text(
             proximos,
-            style: GoogleFonts.roboto(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w700,
-            ),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
         Center(
@@ -91,10 +100,7 @@ class _HomePageState extends State<HomePage> {
           padding: paddingDefault(),
           child: Text(
             'Favoritos',
-            style: GoogleFonts.roboto(
-              fontSize: 18.sp,
-              fontWeight: FontWeight.w700,
-            ),
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
         for (var index = 0; index < provider.favorites.length; index++)

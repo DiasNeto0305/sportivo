@@ -29,6 +29,9 @@ class _PasswordRecoveryPageState extends State<PasswordRecoveryPage> {
           msg: 'Um e-mail de recuperação de senha foi enviado para $_email.',
           color: Colors.green[900],
         );
+        Future.delayed(Duration(seconds: 1), () {
+          Navigator.of(context).pop();
+        });
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           showSnackbar(

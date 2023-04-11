@@ -65,12 +65,22 @@ class _SignupPageState extends State<SignupPage> {
           _authDataSignUp['email'] ?? '',
           _authDataSignUp['password'] ?? '',
         );
-        Navigator.of(context).pushNamed('/loading');
+        showSnackbar(
+            context: context,
+            msg: 'Cadastro realizado com sucesso',
+            color: Colors.green[900]);
+        Future.delayed(Duration(seconds: 1), () {
+          Navigator.of(context).pop();
+        });
       } on AuthException catch (error) {
-        showSnackbar(context: context, msg: error.toString(), color: Colors.red[900]);
+        showSnackbar(
+            context: context, msg: error.toString(), color: Colors.red[900]);
       } catch (error) {
         print(error);
-        showSnackbar(context: context, msg: 'Ocorreu um erro inesperado', color: Colors.red[900]);
+        showSnackbar(
+            context: context,
+            msg: 'Ocorreu um erro inesperado',
+            color: Colors.red[900]);
       }
     }
 

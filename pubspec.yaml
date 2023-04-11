@@ -72,6 +72,7 @@ flutter:
     - assets/img/Yoga.png
     - assets/img/Logo.png
     - assets/img/littleboyswimming.png
+    - assets/img/profile_diary_image.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
